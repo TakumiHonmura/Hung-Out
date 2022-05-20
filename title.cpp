@@ -24,13 +24,16 @@ const int titleEyeInCntMax = titleEyeTimeMax;
 
 //===ファイル素材（クラス）===
 
-SOUND TitleBGM;		//タイトルのBGM
-IMAGE TitleIMAGE;	//タイトルの背景
+SOUND TitleBGM;					//タイトルのBGM
+IMAGE TitleIMAGE;				//タイトルの背景
+IMAGE HikkaduwaPresenIMAGE[2];	//ヒッカドゥアのプレイ説明の画像を入れた配列
+IMAGE TrublePresenIMAGE[2];	//ヒッカドゥアのプレイ説明の画像を入れた配列
+
 
 //タイトル素材ロード
 BOOL GameLoad_Title()
 {
-	if (TitleBGM.LordSound(".\\audio\\title\\harpohikunezumi.mp3", 100, PLAYTYPE::BGM) == FALSE) return FALSE;
+	//if (TitleBGM.LordSound(".\\audio\\title\\harpohikunezumi.mp3", 100, PLAYTYPE::BGM) == FALSE) return FALSE;
 
 	return TRUE;
 }
@@ -45,6 +48,7 @@ VOID GameInit_Title()
 	titleEyeInCnt = titleEyeInCntInit;
 }
 
+//タイトル削除
 VOID GameDelete_Title(VOID)
 {
 	TitleBGM.~SOUND();
@@ -52,21 +56,21 @@ VOID GameDelete_Title(VOID)
 
 VOID Title()
 {
-	TitleProc();
-	TitleDraw();
+	Title_Proc();
+	Title_Draw();
 
 	return;
 }
 
 //タイトル処理
-VOID TitleProc()
+VOID Title_Proc()
 {
 
 	return;
 }
 
 //タイトル描画
-VOID TitleDraw()
+VOID Title_Draw()
 {
 
 	return;

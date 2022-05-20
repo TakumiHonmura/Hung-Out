@@ -14,6 +14,8 @@ using namespace std;
 // マクロ定義
 //=========================================================
 
+//ゲーム設定
+
 #define GAME_TITLE "Hung Out"			//ゲームタイトル
 #define GAME_WIDTH	1280				//ゲーム画面の幅
 #define GAME_HEIGHT	800					//ゲーム画面の高さ
@@ -28,6 +30,11 @@ using namespace std;
 #define PATH_MAX	255					//パスの長さ
 #define STR_MAX		255					//文字の長さ
 #define IMGDIV_MAX	128					//ハンドルの最大数(任意)
+
+//タイトルで使うもの
+
+#define HikkaduwaPresenIMAGE
+#define TrunblePresenIMAGE
 
 //=========================================================
 // 列挙型（C+＋ver）

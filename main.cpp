@@ -2,9 +2,13 @@
 #include "font.h"
 #include "fps.h"
 #include "keyboard.h"
+#include "scene.h"
+
 
 //=========================================================
 //  シーン関係のグローバル変数
+// 
+// CTRL+G 155 コメントアウト
 //=========================================================
 
 //シーン管理の変数
@@ -151,8 +155,8 @@ BOOL GameLoad(VOID)
 	fontDef.SetDefaultFont();
 
 	//切り替え画面用
-	eyeAbove.LoadImageMem(".\\image\\change\\EyeAbove.png");
-	eyeBelow.LoadImageMem(".\\image\\change\\EyeBelow.png");
+	//eyeAbove.LoadImageMem(".\\image\\change\\EyeAbove.png");
+	//eyeBelow.LoadImageMem(".\\image\\change\\EyeBelow.png");
 
 	return TRUE;
 }
@@ -256,7 +260,7 @@ VOID ChangeDraw()
 		switch (OldGameScreen)
 		{
 		case GAME_SCREEN::TITLE://タイトル画面
-			TitleDraw();
+			Title_Draw();
 			break;
 		default:
 			break;
@@ -267,7 +271,7 @@ VOID ChangeDraw()
 		switch (NextGameScreen)
 		{
 		case GAME_SCREEN::TITLE://タイトル画面
-			TitleDraw();
+			Title_Draw();
 			break;
 		default:
 			break;

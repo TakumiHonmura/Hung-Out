@@ -6,16 +6,19 @@
 //シーンに関する関数が入っています
 
 //シーンの読み込み
-BOOL GameLoad_Title(VOID);		//タイトルシーン読み込み
-BOOL GameLoad_TrunblePlay(VOID);		//Trunbleプレイシーン読み込み
+BOOL GameLoad_Title(VOID);			//タイトルシーン読み込み
+BOOL GameLoad_TrunblePlay(VOID);	//Trunbleプレイシーン読み込み
+BOOL GameLoad_HikkaduwaPlay(VOID);	//Hikkaduwaプレイシーン読み込み
 
 //シーンの初期化
-VOID GameInit_Title(VOID);		//タイトルシーン初期化
-VOID GameInit_TrunblePlay(VOID);		//Trunbleプレイシーン初期化
+VOID GameInit_Title(VOID);			//タイトルシーン初期化
+VOID GameInit_TrunblePlay(VOID);	//Trunbleプレイシーン初期化
+VOID GameInit_HikkaduwaPlay(VOID);	//Hikkaduwaプレイシーン初期化
 
 //シーンの削除
-VOID GameDelete_Title(VOID);	//タイトルシーン削除
+VOID GameDelete_Title(VOID);		//タイトルシーン削除
 VOID GameDelete_TrunblePlay(VOID);	//Trunbleプレイシーン削除
+VOID GameDelete_HikkaduwaPlay(VOID);	//Hikkaduwaプレイシーン削除
 
 
 extern VOID Title(VOID);		//タイトル画面

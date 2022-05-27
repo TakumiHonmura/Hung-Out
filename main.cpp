@@ -57,7 +57,7 @@ int WINAPI WinMain(
 	_In_ int nCmdShow)
 {
 	SetOutApplicationLogValidFlag(FALSE);				//Log.txtを出力しない
-	ChangeWindowMode(TRUE);								//ウィンドウモードにする
+	ChangeWindowMode(true);								//ウィンドウモードにする
 	SetMainWindowText(GAME_TITLE);						//タイトルをウィンドウの左上に表示
 	SetGraphMode(GAME_WIDTH, GAME_HEIGHT, GAME_COLOR);	//ウィンドウの解像度を設定
 	SetWindowSize(GAME_WIDTH, GAME_HEIGHT);				//ウィンドウの大きさを設定
@@ -158,6 +158,11 @@ BOOL GameLoad(VOID)
 	//eyeAbove.LoadImageMem(".\\image\\change\\EyeAbove.png");
 	//eyeBelow.LoadImageMem(".\\image\\change\\EyeBelow.png");
 
+	//GameLoadに各シーンのものをセット
+	if (GameLoad_Title() == FALSE) { return FALSE; }
+	if (GameLoad_TrunblePlay() == FALSE) { return FALSE; }
+	if (GameLoad_HikkaduwaPlay() == FALSE) { return FALSE; }
+
 	return TRUE;
 }
 
@@ -166,6 +171,11 @@ VOID GameInit(VOID)
 	//画面切り替えの画像の位置
 	eyeAbove.SetImage(0, -GAME_HEIGHT);
 	eyeBelow.SetImage(0, GAME_HEIGHT);
+
+	//GameInitに各シーンのものをセット
+	GameInit_Title();
+	GameInit_TrunblePlay();	
+	GameInit_HikkaduwaPlay();	
 }
 
 VOID GameDelete(VOID)

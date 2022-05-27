@@ -24,16 +24,30 @@ const int titleEyeInCntMax = titleEyeTimeMax;
 
 //===ファイル素材（クラス）===
 
+MOVIE OpeningMOVIE;				//オープニングムービー
+
 SOUND TitleBGM;					//タイトルのBGM
 IMAGE TitleIMAGE;				//タイトルの背景
-IMAGE HikkaduwaPresenIMAGE[2];	//ヒッカドゥアのプレイ説明の画像を入れた配列
-IMAGE TrublePresenIMAGE[2];	//ヒッカドゥアのプレイ説明の画像を入れた配列
 
+IMAGE HikkaduwaPresenIMAGE[HikkaduwaPresen_SIZE];	//ヒッカドゥアのプレイ説明の画像を入れた配列
+IMAGE TrublePresenIMAGE[TruNblePresen_SIZE];		//タンブールのプレイ説明の画像を入れた配列
 
 //タイトル素材ロード
 BOOL GameLoad_Title()
 {
+	//画像の読み込み
+	if (TitleIMAGE.LoadImageMem(".\\image\\title\\タイトル画面_背景.jpg") == FALSE) return FALSE;				//タイトル背景画像
+
+	if (HikkaduwaPresenIMAGE[0].LoadImageMem(".\\image\\title\\ヒッカドゥア説明1.png") == FALSE) return FALSE;	//ヒッカドゥアプレイ説明画像①
+	if (HikkaduwaPresenIMAGE[1].LoadImageMem(".\\image\\title\\ヒッカドゥア説明2.png") == FALSE) return FALSE;	//ヒッカドゥアプレイ説明画像②
+	if (TrublePresenIMAGE[0].LoadImageMem(".\\image\\title\\タンブール説明1.png") == FALSE) return FALSE;		//タンブールプレイ説明画像①
+	if (TrublePresenIMAGE[1].LoadImageMem(".\\image\\title\\タンブール説明2.png") == FALSE) return FALSE;		//タンブールプレイ説明画像①
+
+	//音楽の読み込み
 	//if (TitleBGM.LordSound(".\\audio\\title\\harpohikunezumi.mp3", 100, PLAYTYPE::BGM) == FALSE) return FALSE;
+
+	//動画の読み込み
+	if (OpeningMOVIE.LoadMOVIE(".\\movie\\TitleTest.mp4",0,PLAYTYPE::LOOP) == FALSE) return FALSE;		//オープニングムービー
 
 	return TRUE;
 }
@@ -46,6 +60,20 @@ VOID GameInit_Title()
 	isTitleEyeIn = FALSE;
 	//アイイン
 	titleEyeInCnt = titleEyeInCntInit;
+
+	//画像の位置を設定
+	TitleIMAGE.SetImage(0, 0);					//背景画像
+	HikkaduwaPresenIMAGE[0].SetImage(0,0);		//ヒッカドゥアの説明画像①
+	HikkaduwaPresenIMAGE[1].SetImage(0,0);		//ヒッカドゥアの説明画像②
+	TrublePresenIMAGE[0].SetImage(0,0);			//タンブールの説明画像①
+	TrublePresenIMAGE[1].SetImage(0,0);			//タンブールの説明画像②
+	
+	//画像のfalse・trueの表示を設定
+	//HikkaduwaPresenIMAGE[0].SetActiveImage(false);		//ヒッカドゥアの説明画像①
+	//HikkaduwaPresenIMAGE[1].SetActiveImage(false);		//ヒッカドゥアの説明画像②
+	//TrublePresenIMAGE[0].SetActiveImage(false);			//タンブールの説明画像①
+	//TrublePresenIMAGE[1].SetActiveImage(false);			//タンブールの説明画像②
+
 }
 
 //タイトル削除
@@ -66,12 +94,29 @@ VOID Title()
 VOID Title_Proc()
 {
 
+
 	return;
 }
 
 //タイトル描画
 VOID Title_Draw()
 {
+	TitleIMAGE.DrawImage();	//タイトル画面背景
+
+	//ヒッカドゥアの説明画像を表示
+	//HikkaduwaPresenIMAGE[0].DrawImage();
+	//HikkaduwaPresenIMAGE[1].DrawImage();
+
+	//タンブールの説明画像を表示
+	//TrublePresenIMAGE[0].DrawImage();
+	//TrublePresenIMAGE[1].DrawImage();
+
+
+	//動画を再生
+	OpeningMOVIE.MyPlayMOVIE();
 
 	return;
 }
+
+
+

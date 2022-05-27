@@ -18,7 +18,7 @@ using namespace std;
 
 #define GAME_TITLE "Hung Out"			//ゲームタイトル
 #define GAME_WIDTH	1280				//ゲーム画面の幅
-#define GAME_HEIGHT	800					//ゲーム画面の高さ
+#define GAME_HEIGHT	720					//ゲーム画面の高さ
 #define GAME_COLOR  32					//ゲームの色域
 
 #define GAME_ICON_ID	333				//ゲームのICONのID
@@ -31,10 +31,9 @@ using namespace std;
 #define STR_MAX		255					//文字の長さ
 #define IMGDIV_MAX	128					//ハンドルの最大数(任意)
 
-//タイトルで使うもの
-
-#define HikkaduwaPresenIMAGE
-#define TrunblePresenIMAGE
+//タイトル画面で使うもの
+#define HikkaduwaPresen_SIZE	2		//プレイ説明画像を入れた配列の要素する(ヒッカドゥア)
+#define TruNblePresen_SIZE	2			//プレイ説明画像を入れた配列の要素する(タンブール)
 
 //=========================================================
 // 列挙型（C+＋ver）
@@ -58,9 +57,15 @@ enum class GAME_SCREEN : int
 enum class PLAYTYPE : int
 {
 	NONE,
-	BGM = DX_PLAYTYPE_LOOP,
-	SE = DX_PLAYTYPE_BACK
+	//音楽
+	BGM = DX_PLAYTYPE_LOOP,	//ループする
+	SE = DX_PLAYTYPE_BACK,	//ループさせない
+	//動画
+	LOOP,					//ループする
+	NOMAL					//ループさせない
+
 };
+
 
 //キャラの向き
 enum class CHARA_DIR : int
@@ -103,10 +108,10 @@ enum class VALUE : int
 //雛形
 class TEMPLATE
 {
-protected:
+public:
 	int handle;			//ハンドル（管理番号）
 	char path[PATH_MAX];//パス　　（場所）
-public:
+
 	TEMPLATE(const char* path = "\0");
 	virtual ~TEMPLATE() {};
 };
@@ -124,6 +129,21 @@ public:
 	VOID ChangeSoundVolume(int vCopy);	//音量の変更
 	VOID MyStopSound(VOID);				//音楽の停止
 	~SOUND();							//ココで音楽ファイルの削除
+};
+
+//動画
+class MOVIE : public TEMPLATE
+{
+private:
+	int volume;
+	PLAYTYPE playtype;
+public:
+	MOVIE(int v = 0, int pt = (int)PLAYTYPE::NONE) :volume(v), playtype((PLAYTYPE)pt) {};
+	BOOL LoadMOVIE(const char* pathCopy, int volumeCopy, PLAYTYPE playTipeCopy); //動画ファイルの読み込み
+	VOID MyPlayMOVIE(VOID);				//動画の再生
+	VOID ChangeMOVIEVolume(int vCopy);	//動画の変更
+	VOID MyStopMOVIE(VOID);				//動画の停止
+	~MOVIE();							//ココで動画ファイルの削除
 };
 
 //画像関係の雛形

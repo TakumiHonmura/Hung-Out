@@ -430,6 +430,10 @@ VOID SOUND::MyStopSound(VOID)
 	return;
 }
 
+
+/// <summary>
+/// ファイルの削除
+/// </summary>
 SOUND::~SOUND()
 {
 	//音楽ファイルのハンドル解放
@@ -448,3 +452,123 @@ VOID DeleteSound(SOUND* sound);			//音楽ファイルの削除
 
 TEMPLATE_IMAGE(int x = 0, int y = 0, int width = 0, int height = 0);
 */
+
+
+//=========================================================
+//  動画
+//=========================================================
+
+
+/// <summary>
+/// 動画ファイルの読み込み
+/// </summary>
+/// <param name="pathCopy">動画ファイルのパス</param>
+/// <param name="volumeCopy">音量</param>
+/// <param name="playTipeCopy">プレイタイプ(単発orループ)</param>
+/// <returns>成功：TRUE｜失敗：FALSE</returns>
+BOOL MOVIE::LoadMOVIE(const char* pathCopy, int volumeCopy, PLAYTYPE playTipeCopy) {
+
+	//動画の読み込み
+	strcpyDx(path, pathCopy);		//パスのコピー
+	handle = LoadGraph(path);		//動画の読み込み
+
+	//音楽が読み込めなかったときは、エラー(-1)が入る
+	if (handle == -1)
+	{
+		MessageBox(
+			GetMainWindowHandle(),	//メインのウィンドウハンドル
+			path,					//メッセージ本文
+			"動画読み込みエラー！",	//メッセージタイトル
+			MB_OK					//ボタン
+		);
+
+		return FALSE;	//読み込み失敗
+	}
+
+	
+	//その他の設定
+	volume = volumeCopy;
+	playtype = playTipeCopy;
+
+}
+
+
+/// <summary>
+/// 動画の再生
+/// </summary>
+/// <param name=""></param>
+VOID MOVIE::MyPlayMOVIE(VOID) {
+	
+	//動画をループさせない時
+	if (playtype == PLAYTYPE::NOMAL)
+	{
+		//再生する
+		SeekMovieToGraph(handle, 0);			//シークバーを最初に戻す
+		PlayMovieToGraph(handle);				//動画を再生
+	}
+	//ループ再生のときは、動画が再生されてない時に再生する
+	else if (playtype == PLAYTYPE::LOOP)
+	{
+		if (GetMovieStateToGraph(handle) == 0)	//0なら再生してない、１なら再生している
+		{
+			//再生する
+			SeekMovieToGraph(handle, 0);			//シークバーを最初に戻す
+			PlayMovieToGraph(handle);				//動画を再生
+		}
+
+	}
+
+	return;
+}
+
+
+/// <summary>
+/// 音量の変更
+/// </summary>
+/// <param name="vCopy">設定したい音量(0~255)</param>
+VOID MOVIE::ChangeMOVIEVolume(int vCopy) {
+
+	//音量変更
+	if (0 <= volume && volume <= 255)
+	{
+		volume += vCopy;
+		ChangeVolumeSoundMem(volume, handle);
+	}
+
+	//音量が範囲外だったら範囲内に戻す
+	if (0 > volume)
+	{
+		volume = 0;
+		ChangeVolumeSoundMem(volume, handle);
+	}
+
+	if (volume >= 255)
+	{
+		volume = 255;
+		ChangeVolumeSoundMem(volume, handle);
+	}
+
+	return;
+}
+
+
+/// <summary>
+/// 動画の停止
+/// </summary>
+/// <param name=""></param>
+VOID MOVIE::MyStopMOVIE(VOID) {
+
+	PauseMovieToGraph(handle);
+}
+
+
+/// <summary>
+/// ファイルの削除
+/// /// </summary>
+MOVIE::~MOVIE() {
+
+	//動画ファイルのハンドル解放
+	DeleteGraph(handle);
+}
+
+

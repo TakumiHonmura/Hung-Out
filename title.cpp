@@ -19,8 +19,9 @@ const int titleEyeInCntInit = 0;
 int titleEyeInCnt = titleEyeInCntInit;
 const int titleEyeInCntMax = titleEyeTimeMax;
 
-//===タイトルの処理で使用===
+//===タイトルの処理で使用　（関数）===
 
+char MoviePlayCnt;
 
 //===ファイル素材（クラス）===
 
@@ -47,7 +48,7 @@ BOOL GameLoad_Title()
 	//if (TitleBGM.LordSound(".\\audio\\title\\harpohikunezumi.mp3", 100, PLAYTYPE::BGM) == FALSE) return FALSE;
 
 	//動画の読み込み
-	if (OpeningMOVIE.LoadMOVIE(".\\movie\\TitleTest.mp4",0,PLAYTYPE::LOOP) == FALSE) return FALSE;		//オープニングムービー
+	if (OpeningMOVIE.LoadMOVIE(".\\movie\\オープニング.mp4",0,PLAYTYPE::NOMAL) == FALSE) return FALSE;		//オープニングムービー
 
 	return TRUE;
 }
@@ -55,6 +56,9 @@ BOOL GameLoad_Title()
 //タイトル初期化
 VOID GameInit_Title()
 {
+	//関数の初期化
+	MoviePlayCnt = 0;
+
 	//フェードアウト
 	fadeOutInCnt = fadeOutInCntInit;		//フェードアウトのカウンタ
 	isTitleEyeIn = FALSE;
@@ -91,9 +95,7 @@ VOID Title()
 }
 
 //タイトル処理
-VOID Title_Proc()
-{
-
+VOID Title_Proc(){
 
 	return;
 }
@@ -101,7 +103,21 @@ VOID Title_Proc()
 //タイトル描画
 VOID Title_Draw()
 {
-	TitleIMAGE.DrawImage();	//タイトル画面背景
+	//動画を再生
+	if (true)
+	{
+
+	}
+	OpeningMOVIE.MyPlayMOVIE();
+
+	MoviePlayCnt++;
+	//動画再生が終わったら
+	if (MoviePlayCnt == 1)
+	{
+		TitleIMAGE.DrawImage();	//タイトル画面背景
+	}
+
+
 
 	//ヒッカドゥアの説明画像を表示
 	//HikkaduwaPresenIMAGE[0].DrawImage();
@@ -112,8 +128,7 @@ VOID Title_Draw()
 	//TrublePresenIMAGE[1].DrawImage();
 
 
-	//動画を再生
-	OpeningMOVIE.MyPlayMOVIE();
+
 
 	return;
 }

@@ -503,8 +503,9 @@ VOID MOVIE::MyPlayMOVIE(VOID) {
 	if (playtype == PLAYTYPE::NOMAL)
 	{
 		//再生する
-		SeekMovieToGraph(handle, 0);			//シークバーを最初に戻す
 		PlayMovieToGraph(handle);				//動画を再生
+
+		DrawExtendGraph(0, 0, GAME_WIDTH, GAME_HEIGHT, handle, TRUE);
 	}
 	//ループ再生のときは、動画が再生されてない時に再生する
 	else if (playtype == PLAYTYPE::LOOP)
@@ -516,6 +517,7 @@ VOID MOVIE::MyPlayMOVIE(VOID) {
 			PlayMovieToGraph(handle);				//動画を再生
 		}
 
+		DrawExtendGraph(-20, 0,GAME_WIDTH, GAME_HEIGHT, handle, TRUE);
 	}
 
 	return;

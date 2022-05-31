@@ -21,14 +21,22 @@ const int titleEyeInCntMax = titleEyeTimeMax;
 
 //===タイトルの処理で使用　（関数）===
 
-char MoviePlayCnt;
+//PushEnterを点滅させる時に使う関数
+int PushEnterCnt = 0;				//カウンタ
+const int PushEnterCntMAX = 100;	//カウンタMAX値
+BOOL PushEnterBrink = FALSE;		//点滅しているか？
 
 //===ファイル素材（クラス）===
 
+//動画
 MOVIE OpeningMOVIE;				//オープニングムービー
 
+//音楽
 SOUND TitleBGM;					//タイトルのBGM
+
+//画像
 IMAGE TitleIMAGE;				//タイトルの背景
+IMAGE TitleEnterIMAGE;				//タイトルの背景
 
 IMAGE HikkaduwaPresenIMAGE[HikkaduwaPresen_SIZE];	//ヒッカドゥアのプレイ説明の画像を入れた配列
 IMAGE TrublePresenIMAGE[TruNblePresen_SIZE];		//タンブールのプレイ説明の画像を入れた配列
@@ -37,7 +45,8 @@ IMAGE TrublePresenIMAGE[TruNblePresen_SIZE];		//タンブールのプレイ説明の画像を入
 BOOL GameLoad_Title()
 {
 	//画像の読み込み
-	if (TitleIMAGE.LoadImageMem(".\\image\\title\\タイトル画面_背景.jpg") == FALSE) return FALSE;				//タイトル背景画像
+	if (TitleIMAGE.LoadImageMem(".\\image\\title\\タイトル画面.png") == FALSE) return FALSE;				//タイトル背景画像
+	if (TitleEnterIMAGE.LoadImageMem(".\\image\\title\\TitlePushEnter.png") == FALSE) return FALSE;				//タイトル背景画像
 
 	if (HikkaduwaPresenIMAGE[0].LoadImageMem(".\\image\\title\\ヒッカドゥア説明1.png") == FALSE) return FALSE;	//ヒッカドゥアプレイ説明画像①
 	if (HikkaduwaPresenIMAGE[1].LoadImageMem(".\\image\\title\\ヒッカドゥア説明2.png") == FALSE) return FALSE;	//ヒッカドゥアプレイ説明画像②
@@ -56,9 +65,6 @@ BOOL GameLoad_Title()
 //タイトル初期化
 VOID GameInit_Title()
 {
-	//関数の初期化
-	MoviePlayCnt = 0;
-
 	//フェードアウト
 	fadeOutInCnt = fadeOutInCntInit;		//フェードアウトのカウンタ
 	isTitleEyeIn = FALSE;
@@ -72,12 +78,6 @@ VOID GameInit_Title()
 	TrublePresenIMAGE[0].SetImage(0,0);			//タンブールの説明画像①
 	TrublePresenIMAGE[1].SetImage(0,0);			//タンブールの説明画像②
 	
-	//画像のfalse・trueの表示を設定
-	//HikkaduwaPresenIMAGE[0].SetActiveImage(false);		//ヒッカドゥアの説明画像①
-	//HikkaduwaPresenIMAGE[1].SetActiveImage(false);		//ヒッカドゥアの説明画像②
-	//TrublePresenIMAGE[0].SetActiveImage(false);			//タンブールの説明画像①
-	//TrublePresenIMAGE[1].SetActiveImage(false);			//タンブールの説明画像②
-
 }
 
 //タイトル削除
@@ -97,27 +97,53 @@ VOID Title()
 //タイトル処理
 VOID Title_Proc(){
 
+
+
 	return;
 }
 
 //タイトル描画
 VOID Title_Draw()
 {
-	//動画を再生
-	if (true)
+
+	//OpeningMOVIE.MyPlayMOVIE();
+
+	//タイトル画面_背景
+	TitleIMAGE.DrawImage();
+
+	//PushEnterを点滅させる
+	if (PushEnterCnt < PushEnterCntMAX) { PushEnterCnt++; }
+	else
 	{
+		if (PushEnterBrink == TRUE)PushEnterBrink = FALSE;
+		else if (PushEnterBrink == FALSE)PushEnterBrink = TRUE;
 
+		PushEnterCnt = 0;	//カウンタを初期化
 	}
-	OpeningMOVIE.MyPlayMOVIE();
 
-	MoviePlayCnt++;
-	//動画再生が終わったら
-	if (MoviePlayCnt == 1)
+	if (PushEnterBrink == TRUE)
 	{
-		TitleIMAGE.DrawImage();	//タイトル画面背景
+		//半透明にする
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, ((float)PushEnterCnt / PushEnterCntMAX) * 255);
+
+		//PushEnterの描画
+		TitleEnterIMAGE.DrawImage();
+
+		//半透明終了
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
+	if (PushEnterBrink == FALSE)
+	{
+		//半透明にする
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, ((float)(PushEnterCntMAX - PushEnterCnt) / PushEnterCntMAX) * 255);
 
+		//PushEnterの描画
+		TitleEnterIMAGE.DrawImage();
+
+		//半透明終了
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 
 	//ヒッカドゥアの説明画像を表示
 	//HikkaduwaPresenIMAGE[0].DrawImage();

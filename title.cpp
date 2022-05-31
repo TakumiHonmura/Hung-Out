@@ -36,7 +36,7 @@ SOUND TitleBGM;					//タイトルのBGM
 
 //画像
 IMAGE TitleIMAGE;				//タイトルの背景
-IMAGE TitleEnterIMAGE;			//PushEnter
+IMAGE TitleEnterIMAGE;				//タイトルの背景
 
 IMAGE HikkaduwaPresenIMAGE[HikkaduwaPresen_SIZE];	//ヒッカドゥアのプレイ説明の画像を入れた配列
 IMAGE TrublePresenIMAGE[TruNblePresen_SIZE];		//タンブールのプレイ説明の画像を入れた配列
